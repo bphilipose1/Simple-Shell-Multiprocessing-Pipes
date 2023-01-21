@@ -1,21 +1,43 @@
-#include<iostream>
-#include<string>
-#include  <bits/stdc++.h>
-#include<vector>
-
+#include <iostream>
+#include <cstring>
+#include <string>
 using namespace std;
+int main(int argc, char* argv[])    {
+    //creating buffer for tokens
+    const int max_NUM = 20;
+    const int max_SZ = 20;
+    char buf[max_SZ][max_NUM];
+    int rowCnt = 0;
+    int clmnCnt = 0;
 
-int main(){
-    string line = "Hello world!";
-    vector <string> tokens;
-    stringstream check1(line);
-    string something;
 
-    while (getline(check1,something,' '))
-    {
-        tokens.push_back(something);
+    string inputCMD;
+    char tempChar;
+    cout << "myshell$";
+    cin >> inputCMD;
+
+    const int charlength = inputCMD.length() + 1;
+
+    for(int it; it<charlength; it++) { //cycles through each string in argv
+        tempChar = inputCMD[it];
+        if(tempChar == " ")  {//put \0 for space
+        buf[rowCnt][clmnCnt] = NULL;
+        clmnCnt++;
+        }
+
+        else if(tempChar = "|") {//start new row in buf 2D array
+        rowCnt++;
+        }
+
+        else {//add to new column in buf 2D Array
+        *buf[rowCnt][clmnCnt] = tempChar;
+        clmnCnt++; 
+        }
+
+        it++;
     }
-    for(int i = 0; i < tokens.size();i++)
-    cout << tokens[i] << endl;
-    return 0;
+    cout << buf[0][0] << endl;
+    
+
+
 }
