@@ -13,35 +13,39 @@ int main(int argc, char* argv[])    {
    
 
     string inputCMD;
-    //char tempChar;
-    //cout << "myshell$";
-    //cin >> inputCMD;
+    cout << "myshell$";
+    getline(cin, inputCMD);
 
-    //test input
-    inputCMD = "helllo worlllld | worlld hello | wold hllo fls | f kdk | -li";
+    //test input COPY AND PASTE WHEN PROMPTED :  ls -alF / | grep bin | tr a-z A-Z | rev | cat -n
     inputCMD += " ";    // space indicates end of string
     string token;
 
 
     for (auto tempTok : inputCMD)    {  // itereates through each character from input string
-        if (tempTok == ' ' && token.length() == 0)  {//ignore space after | symbol
+        if (tempTok == ' ' && token.length() == 0)  {//do nothing if it reads space and nothing is in token (also deals with extra spaces between command tokens)
+            cout << "With \"" << tempTok << "\" it ended in CASE 1" << endl;
             continue;  
+            
         }
         else if (tempTok == ' ' && token.length() != 0) {   //space after a word indicates it has been put fully in token therefore add to 2D array
-            cout << "Inserted: " << token << " At index(" << rowCnt << ", " << clmnCnt << ") ";
+            cout << "With \"" << tempTok << "\" it ended in CASE 2" << endl;
             buf[rowCnt][clmnCnt] = token;
             clmnCnt++;
             token = ""; //clears up token for next word
+            
         }
         else if(tempTok == '|') {   //if pipe is read it adds "\0" to signify end of the row and changes write to new row to signify new process command
+            cout << "With \"" << tempTok << "\" it ended in CASE 3" << endl;
             clmnCnt++;
             buf[rowCnt][clmnCnt] = "\0";
             rowCnt++;
             clmnCnt = 0;
-            cout << "" << endl;
+            
         }
         else    {   //iterates through characters of a word
+            cout << "With \"" << tempTok << "\" it ended in CASE 4" << endl;
             token += tempTok;//combines characters to form a token 
+            
         }
     }
 
@@ -59,5 +63,4 @@ int main(int argc, char* argv[])    {
         cout << "" << endl;
     }
     
-
 }
