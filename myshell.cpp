@@ -4,40 +4,60 @@
 using namespace std;
 int main(int argc, char* argv[])    {
     //creating buffer for tokens
+   
     const int max_NUM = 20;
     const int max_SZ = 20;
-    char buf[max_SZ][max_NUM];
+    string buf[max_SZ][max_NUM];
     int rowCnt = 0;
     int clmnCnt = 0;
-
+   
 
     string inputCMD;
-    char tempChar;
-    cout << "myshell$";
-    cin >> inputCMD;
+    //char tempChar;
+    //cout << "myshell$";
+    //cin >> inputCMD;
 
-    const int charlength = inputCMD.length() + 1;
+    //test input
+    inputCMD = "helllo worlllld | worlld hello | wold hllo fls | f kdk | -li";
+    inputCMD += " ";    // space indicates end of string
+    string token;
 
-    for(int it; it<charlength; it++) { //cycles through each string in argv
-        tempChar = inputCMD[it];
-        if(tempChar == " ")  {//put \0 for space
-        buf[rowCnt][clmnCnt] = NULL;
-        clmnCnt++;
+
+    for (auto tempTok : inputCMD)    {  // itereates through each character from input string
+        if (tempTok == ' ' && token.length() == 0)  {//ignore space after | symbol
+            continue;  
         }
-
-        else if(tempChar = "|") {//start new row in buf 2D array
-        rowCnt++;
+        else if (tempTok == ' ' && token.length() != 0) {   //space after a word indicates it has been put fully in token therefore add to 2D array
+            cout << "Inserted: " << token << " At index(" << rowCnt << ", " << clmnCnt << ") ";
+            buf[rowCnt][clmnCnt] = token;
+            clmnCnt++;
+            token = ""; //clears up token for next word
         }
-
-        else {//add to new column in buf 2D Array
-        *buf[rowCnt][clmnCnt] = tempChar;
-        clmnCnt++; 
+        else if(tempTok == '|') {   //if pipe is read it adds "\0" to signify end of the row and changes write to new row to signify new process command
+            clmnCnt++;
+            buf[rowCnt][clmnCnt] = "\0";
+            rowCnt++;
+            clmnCnt = 0;
+            cout << "" << endl;
         }
-
-        it++;
+        else    {   //iterates through characters of a word
+            token += tempTok;//combines characters to form a token 
+        }
     }
-    cout << buf[0][0] << endl;
-    
 
+    //testing 2D array contents
+    cout << "\ntime to test array :(" << rowCnt << ")("<< clmnCnt <<")" << endl;
+    for (int i = 0; i <= rowCnt; i++)
+    {
+        cout << "|";
+        for (int j = 0; j <= clmnCnt; j++)
+        {
+            if(buf[i][j] == "\0")
+                continue;
+            cout << buf[i][j] << "|";
+        }
+        cout << "" << endl;
+    }
+    
 
 }
