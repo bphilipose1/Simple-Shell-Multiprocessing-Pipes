@@ -59,14 +59,14 @@ int main() {
                     close(pipefd[j][0]);
                     close(pipefd[j][1]);
                 }
-                vector<string> cmd = commands[i];
-                char* argv[cmd.size() + 1];
-                for (int j = 0; j < cmd.size(); j++) {
-                    argv[j] = &cmd[j][0];
+                vector<string> cmd = commands[i];   //takes first row of 2D array and stores into cmd array (signifies all tokens in 1 process)   EX: echo Hello world (1 process) 3 tokens
+                char* argv[cmd.size() + 1]; //sets argv size to match size of 1 row in 2D array
+                for (int j = 0; j < cmd.size(); j++) {  //iterates through the cmd array
+                    argv[j] = &cmd[j][0];   //stores the address for each element in cmd array into argv
                 }
-                argv[cmd.size()] = NULL;
-                execvp(argv[0], argv);
-                exit(0);
+                argv[cmd.size()] = NULL;    //sets last array element to NULL to signify end of array
+                execvp(argv[0], argv);  //morphs child process to do command that is passed in argv
+                exit(0);    //exits child process
             }
         }
         for (int i = 0; i < num_pipes; i++) {
