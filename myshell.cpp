@@ -25,7 +25,7 @@ void createPipes(int pipAmnt, int pipefd[][2]) { // create pipe function
 int main(int argc, char* argv[])    {
     //creating buffer for tokens
     const int max_NUM = 20;
-    const int max_SZ = 20;
+    const int max_SZ = 500;
     string buf[max_SZ][max_NUM];
 
     int rowCnt = 0;
